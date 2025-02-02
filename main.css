@@ -1,0 +1,146 @@
+body {
+    margin: 0px;
+    padding: 0px;
+}
+
+.parts-of-screen {
+    height: calc(98vh - 50px);
+    margin: 0px;
+    border: 1px solid gray;
+}
+
+.half-of-part {
+    height: calc(calc(calc(98vh - 50px) / 2) - 2px);
+    margin: 0px;
+    border: 1px solid gray;
+}
+
+.empty-file {
+    height: calc(calc(calc(98vh - 50px) - 50px) - 4px);
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.not-empty-file {
+    display: block;
+    max-height: calc(calc(calc(98vh - 50px) - 50px) - 4px);
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+.empty-folder {
+    height: calc(calc(calc(calc(98vh - 50px) / 2) - 2px) - 50px);
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.not-empty-folder {
+    display: block;
+    max-height: calc(calc(calc(calc(98vh - 50px) / 2) - 2px) - 50px);
+    width: 100%;
+    overflow-y: auto;
+}
+
+.file-title {
+    height: 49px;
+    width: 100%;
+    max-width: 100%;
+    background-color: rgb(25, 118, 210);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    overflow-wrap: anywhere;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.green-bg {
+    background-color: green;
+    color: white;
+}
+
+.green-bg:hover {
+    background-color: rgba(0, 128, 0, 0.5);
+}
+
+.index-text-line:hover .green-bg {
+    background-color: rgba(0, 128, 0, 0.5);
+}
+
+.red-bg {
+    background-color: red;
+    color: white;
+}
+
+.red-bg:hover {
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
+.index-text-line:hover .red-bg {
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
+.indigo-bg {
+    background-color: indigo;
+    color: white;
+}
+
+.indigo-bg:hover {
+    background-color: rgba(75, 0, 130, 0.5);
+}
+
+.index-text-line:hover .indigo-bg {
+    background-color: rgba(75, 0, 130, 0.5);
+}
+
+::-webkit-scrollbar {
+    height: 12px;
+    width: 14px;
+    background: transparent;
+    z-index: 12;
+    overflow: visible;
+}
+
+::-webkit-scrollbar-thumb {
+    width: 10px;
+    background-color: #00b4ff;
+    border-radius: 10px;
+    z-index: 12;
+    border: 4px solid rgba(0, 0, 0, 0);
+    background-clip: padding-box;
+    -webkit-transition: background-color .28s ease-in-out;
+    transition: background-color .28s ease-in-out;
+    margin: 4px;
+    min-height: 32px;
+    min-width: 32px;
+}
+
+/* .cm-content {
+    max-width: 100%;
+} */
+
+/* .cm-line {
+    overflow-wrap: anywhere;
+    overflow-x: hidden;
+    overflow-y: auto;
+} */
+
+/* .CodeMirror-sizer {
+    margin-left: 0px;
+}
+
+.CodeMirror-sizer {
+    width: 5vw;
+}
+
+.CodeMirror-line {
+    width: calc(100% - 5vw);
+} */

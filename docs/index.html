@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+Copyright 2024-2025 Yu Hongbo <yuhongbo@member.fsf.org>, 
+  CNOCTAVE <cnoctave@qq.com>
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.  This file is offered as-is,
+without any warranty.
+-->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,width=device-width">
+    <meta name="theme-color" content="#00B4FF">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="msapplication-TileImage" content="favicon.ico">
+    <meta name="msapplication-TileColor" content="#000000">
+    <meta name="apple-mobile-web-app-title" content="compare-folders文档">
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet" type="text/css">
+    <link href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" rel="stylesheet" type="text/css">
+    <link href="https://use.fontawesome.com/releases/v6.1.1/css/all.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/animate.css@^4.0.0/animate.min.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/quasar@2.17.0/dist/quasar.prod.css" rel="stylesheet" type="text/css">
+    <link href="assets/main.css" rel="stylesheet" type="text/css">
+    <title>compare-folders文档</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <meta name="title" content="compare-folders文档" data-qmeta="title">
+    <meta property="og:title" content="compare-folders文档" data-qmeta="ogTitle">
+    <meta name="twitter:title" content="compare-folders文档" data-qmeta="twitterTitle">
+    <meta name="description" content="Octave中文网是一个面向中文Octave开发者的交流平台，拥有中文Octave文档、中文Octave论坛和中文Octave新闻等特色。"
+        data-qmeta="description">
+    <meta property="og:description" content="Octave中文网是一个面向中文Octave开发者的交流平台，拥有中文Octave文档、中文Octave论坛和中文Octave新闻等特色。"
+        data-qmeta="ogDesc">
+    <meta name="twitter:description" content="Octave中文网是一个面向中文Octave开发者的交流平台，拥有中文Octave文档、中文Octave论坛和中文Octave新闻等特色。"
+        data-qmeta="twitterDesc">
+</head>
+
+<body>
+    <div id="q-app">
+        <q-layout view="hHh LpR fFf">
+            <q-header elevated class="bg-primary text-white">
+                <q-toolbar class="bg-primary text-white q-ny-md shadow-2">
+                    <q-btn stretch flat label="Octave中文网" @click="goTo('http://cnoctave.cn')"></q-btn>
+                    <q-separator dark vertical></q-separator>
+                    <q-btn stretch flat label="compare-folders文档" @click="scrollToTop()"></q-btn>
+                    <q-separator dark vertical></q-separator>
+                    <q-space></q-space>
+                    <q-separator dark vertical></q-separator>
+                    <q-btn-dropdown stretch flat icon="translate" label="切换文档语言">
+                        <q-list>
+                            <q-item clickable v-close-popup @click="goTo('index.html')">
+                                <q-item-section>
+                                    <q-item-label>zh-CN 简体中文</q-item-label>
+                                </q-item-section>
+                            </q-item>
+                        </q-list>
+                    </q-btn-dropdown>
+                    <q-separator dark vertical></q-separator>
+                    <q-btn stretch flat label="中文版Octave文档" @click="goTo('http://docs.cnoctave.cn')"></q-btn>
+                    <q-separator dark vertical></q-separator>
+                    <q-btn stretch flat label="学术交流论坛" @click="goTo('http://forum.cnoctave.cn')"></q-btn>
+                    <q-separator dark vertical></q-separator>
+                    <q-btn stretch flat label="新闻" @click="goTo('https://octave.org/news.html')"></q-btn>
+                    <q-separator dark vertical></q-separator>
+                    <q-btn stretch flat label="使用方法" @click="goTo('https://wiki.octave.org/Using_Octave')"></q-btn>
+                    <q-separator dark vertical></q-separator>
+                    <q-btn stretch flat label="免费下载" @click="goTo('https://octave.org/download')"></q-btn>
+                </q-toolbar>
+            </q-header>
+            <q-drawer class="bg-primary" show-if-above v-model="leftDrawerOpen" side="left" bordered elevated>
+                <q-list class="title1 text-white bg-primary">
+                    <q-item clickable v-ripple @click="goToID('#homepage')">
+                        <q-item-section avatar>
+                            <q-icon name="help" />
+                        </q-item-section>
+                        <q-item-section>
+                            项目首页
+                        </q-item-section>
+                    </q-item>
+                    <q-item clickable v-ripple @click="goToID('#repo_install')">
+                        <q-item-section avatar>
+                            <q-icon name="help" />
+                        </q-item-section>
+                        <q-item-section>
+                            软件源安装
+                        </q-item-section>
+                    </q-item>
+                    <q-item clickable v-ripple @click="goToID('#how_to_use')">
+                        <q-item-section avatar>
+                            <q-icon name="help" />
+                        </q-item-section>
+                        <q-item-section>
+                            如何使用
+                        </q-item-section>
+                    </q-item>
+                    <q-item clickable v-ripple @click="goToID('#development_environment')">
+                        <q-item-section avatar>
+                            <q-icon name="help" />
+                        </q-item-section>
+                        <q-item-section>
+                            开发环境
+                        </q-item-section>
+                    </q-item>
+                    <q-item clickable v-ripple @click="goToID('#dependencies')">
+                        <q-item-section avatar>
+                            <q-icon name="help" />
+                        </q-item-section>
+                        <q-item-section>
+                            依赖库
+                        </q-item-section>
+                    </q-item>
+                    <q-item clickable v-ripple @click="goToID('#references')">
+                        <q-item-section avatar>
+                            <q-icon name="help" />
+                        </q-item-section>
+                        <q-item-section>
+                            引用compare-folders
+                        </q-item-section>
+                    </q-item>
+                </q-list>
+            </q-drawer>
+
+            <q-page-container>
+                <div style="position: relative;">
+                    <q-img src="pic/banner0.png" spinner-color="white" style="width: 100%; height: 300px;"></q-img>
+                    <div class="q-mx-md rainbow-text"
+                        style="line-height: 300px; font-size: 100px; position: absolute; left: 0%; top: 0%;">
+                        compare-folders文档
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="main">
+                        <div class="text-h5 q-ma-md text-red-10">欢迎广大开发者将此文档翻译为其他语言。</div>
+                        <q-btn id="homepage" class="title1 text-white bg-primary" stretch flat
+                            label="项目首页：https://github.com/CNOCTAVE/compare-folders"
+                            @click="goTo('https://github.com/CNOCTAVE/compare-folders')"></q-btn>
+                        <q-separator></q-separator>
+                        <div id="repo_install" class="title1 q-ma-md text-primary">软件源安装</div>
+                        <p class="q-ma-md">compare-folders可以通过NPM软件源安装。</p>
+                        <div class="text-h5 q-ma-md text-red-10">通过NPM软件源安装compare-folders，代码如下：</div>
+                        <p class="q-ma-md">$ npm i compare-folders</p>
+                        <p class="q-ma-md">compare-folders可以通过Snap软件源安装。</p>
+                        <div class="text-h5 q-ma-md text-red-10">通过Snap软件源安装compare-folders，代码如下：</div>
+                        <p class="q-ma-md">$ sudo snap install compare-folders --edge</p>
+                        <q-separator></q-separator>
+                        <div id="how_to_use" class="title1 q-ma-md text-primary">如何使用</div>
+                        <div class="text-h5 q-ma-md text-red-10">点击左上角的按钮和左侧的按钮即可打开文件夹1和文件夹2，如图所示：</div>
+                        <q-img src="pic/open_folders.png" spinner-color="white"
+                            style="width: 100%; height: auto;"></q-img>
+                        <div class="text-h5 q-ma-md text-red-10">在打开文件夹1和文件夹2之后，左侧会显示文件夹1和文件夹2中的文件列表，如图所示：</div>
+                        <p class="q-ma-md">左侧的按钮将显示文件夹1和文件夹2的路径</p>
+                        <p class="q-ma-md" style="display:inline;">如果一个文件夹中有某个文件，而另一个文件夹中没有同名文件，则这个文件名将在文件列表中显示为</p>
+                        <p style="display:inline; background-color: green; color:white;">绿色</p>
+                        <p class="q-ma-md"></p>
+                        <p class="q-ma-md" style="display:inline;">如果两个文件夹中均有同名文件，但两个文件的内容不同，则这个文件名将在文件列表中显示为</p>
+                        <p style="display:inline; background-color: red; color:white;">红色</p>
+                        <p class="q-ma-md"></p>
+                        <p class="q-ma-md" style="display:inline;">如果两个文件夹中均有同名文件，且两个文件的内容相同，则这个文件名将在文件列表中显示为</p>
+                        <p style="display:inline; background-color: black; color:white;">透明色（黑色）</p>
+                        <q-img src="pic/show_file_list.png" spinner-color="white"
+                            style="width: 100%; height: auto;"></q-img>
+                        <div class="text-h5 q-ma-md text-red-10">点击两个文件列表中的任意文件名即可对比两个文件</div>
+                        <p class="q-ma-md">如果两个文件夹中均有同名文件，文件能够打开且不为空，则文件标题栏将显示“文件夹1：文件名”或“文件夹2：文件名”，文件窗口将显示文件内容</p>
+                        <p class="q-ma-md">如果两个文件夹中均有同名文件，文件能够打开但为空，则文件标题栏将显示“（空文件）文件夹1：文件名”或“（空文件）文件夹2：文件名”，文件窗口将显示“无内容”报错</p>
+                        <p class="q-ma-md">如果在点击文件名时，系统发生文件错误（例如文件夹中没有这个文件），则文件标题栏将显示“（文件错误）文件夹1：文件名”或“（文件错误）文件夹2：文件名”，文件窗口将显示“无内容”报错</p>
+                        <div class="text-h5 q-ma-md text-red-10">文件按行进行对比</div>
+                        <p class="q-ma-md" style="display:inline;">行号在文件窗口中显示为</p>
+                        <p style="display:inline; background-color: indigo; color:white;">靛蓝</p>
+                        <p class="q-ma-md"></p>
+                        <p class="q-ma-md" style="display:inline;">如果行发生增加，则在行号前显示加号“+”，用</p>
+                        <p style="display:inline; background-color: green; color:white;">绿色</p>
+                        <p class="q-ma-md" style="display:inline;">表示这种情况</p>
+                        <p class="q-ma-md"></p>
+                        <p class="q-ma-md" style="display:inline;">如果行发生减少，则在行号前显示减号“-”，用</p>
+                        <p style="display:inline; background-color: red; color:white;">红色</p>
+                        <p class="q-ma-md" style="display:inline;">表示这种情况</p>
+                        <p class="q-ma-md"></p>
+                        <p class="q-ma-md" style="display:inline;">如果两行相同，则这行将在文件窗口中显示为</p>
+                        <p style="display:inline; background-color: black; color:white;">透明色（黑色）</p>
+                        <p class="q-ma-md"></p>
+                        <p class="q-ma-md" style="display:inline;">如果文件夹1中的某个文件添加了一行，或者文件夹2中的某个文件删除了一行，则这行将在文件窗口1中显示为</p>
+                        <p style="display:inline; background-color: red; color:white;">红色</p>
+                        <p class="q-ma-md" style="display:inline;">，这行将在文件窗口2中显示为</p>
+                        <p style="display:inline; background-color: green; color:white;">绿色</p>
+                        <p class="q-ma-md"></p>
+                        <p class="q-ma-md" style="display:inline;">如果文件夹2中的某个文件添加了一行，或者文件夹1中的某个文件删除了一行，则这行将在文件窗口1中显示为</p>
+                        <p style="display:inline; background-color: green; color:white;">绿色</p>
+                        <p class="q-ma-md" style="display:inline;">，这行将在文件窗口2中显示为</p>
+                        <p style="display:inline; background-color: red; color:white;">红色</p>
+                        <p class="q-ma-md"></p>
+                        <p class="q-ma-md" style="display:inline;">如果文件修改了一行，则当前文件的这一行显示为</p>
+                        <p style="display:inline; background-color: red; color:white;">红色</p>
+                        <p class="q-ma-md" style="display:inline;">，另一个文件的这一行显示为</p>
+                        <p style="display:inline; background-color: green; color:white;">绿色</p>
+                        <p class="q-ma-md"></p>
+                        <div class="text-h5 q-ma-md text-red-10">下面使用10个文件作为文件对比的示范，如图所示：</div>
+                        <q-img src="pic/demo_files.png" spinner-color="white" style="width: 100%; height: auto;"></q-img>
+                        <div class="text-h5 q-ma-md text-red-10">对比两个相同的文件，如图所示：</div>
+                        <q-img src="pic/compare_same.png" spinner-color="white" style="width: 100%; height: auto;"></q-img>
+                        <div class="text-h5 q-ma-md text-red-10">一个文件夹中有某个文件，而另一个文件夹中没有同名文件，对比文件，如图所示：</div>
+                        <q-img src="pic/compare_onlyInFolder1.png" spinner-color="white" style="width: 100%; height: auto;"></q-img>
+                        <q-img src="pic/compare_onlyInFolder2.png" spinner-color="white" style="width: 100%; height: auto;"></q-img>
+                        <div class="text-h5 q-ma-md text-red-10">文件夹1中的某个文件为空，文件夹2中的同名文件不为空，对比文件，如图所示：</div>
+                        <q-img src="pic/compare_emptyFileInFolder1.png" spinner-color="white" style="width: 100%; height: auto;"></q-img>
+                        <div class="text-h5 q-ma-md text-red-10">文件夹1中的某个文件增加1行，文件夹2中的同名文件删除1行，对比文件，如图所示：</div>
+                        <q-img src="pic/compare_addOrDeleteLine.png" spinner-color="white" style="width: 100%; height: auto;"></q-img>
+                        <div class="text-h5 q-ma-md text-red-10">文件修改了一行，对比文件，如图所示：</div>
+                        <q-img src="pic/compare_modifyLine.png" spinner-color="white" style="width: 100%; height: auto;"></q-img>
+                        <div class="text-h5 q-ma-md text-red-10">点击最小化按钮即可最小化窗口，如图所示：</div>
+                        <q-img src="pic/minimize.png" spinner-color="white" style="width: 100%; height: auto;"></q-img>
+                        <div class="text-h5 q-ma-md text-red-10">点击最大化/还原按钮即可最大化/还原窗口，如图所示：</div>
+                        <q-img src="pic/maximize.png" spinner-color="white" style="width: 100%; height: auto;"></q-img>
+                        <div class="text-h5 q-ma-md text-red-10">点击关闭按钮即可退出程序，如图所示：</div>
+                        <q-img src="pic/close.png" spinner-color="white" style="width: 100%; height: auto;"></q-img>
+                        <div class="text-h5 q-ma-md text-red-10">实用小技巧</div>
+                        <p class="q-ma-md">文件窗口1中的行号对应文件2的真实行号</p>
+                        <p class="q-ma-md">文件窗口2中的行号对应文件1的真实行号</p>
+                        <p class="q-ma-md" style="display:inline;">一个文件去掉</p>
+                        <p style="display:inline; background-color: red; color:white;">红色</p>
+                        <p class="q-ma-md" style="display:inline;">所在行，再加上</p>
+                        <p style="display:inline; background-color: green; color:white;">绿色</p>
+                        <p class="q-ma-md" style="display:inline;">所在行，就能改为另一个文件</p>
+                        <p class="q-ma-md"></p>
+                        <p class="q-ma-md" style="display:inline;">要想找到一个文件比另一个文件多的行，就找</p>
+                        <p style="display:inline; background-color: red; color:white;">红色</p>
+                        <p class="q-ma-md" style="display:inline;">所在行</p>
+                        <p class="q-ma-md"></p>
+                        <p class="q-ma-md" style="display:inline;">要想找到一个文件比另一个文件少的行，就找</p>
+                        <p style="display:inline; background-color: green; color:white;">绿色</p>
+                        <p class="q-ma-md" style="display:inline;">所在行</p>
+                        <p class="q-ma-md"></p>
+                        <p class="q-ma-md" style="display:inline;">要想找到某一行修改了哪里，</p>
+                        <p style="display:inline; background-color: red; color:white;">红色</p>
+                        <p class="q-ma-md" style="display:inline;">是当前文件的版本，</p>
+                        <p style="display:inline; background-color: green; color:white;">绿色</p>
+                        <p class="q-ma-md" style="display:inline;">是另一个文件的版本。在某一行有修改时，</p>
+                        <p style="display:inline; background-color: red; color:white;">红色</p>
+                        <p class="q-ma-md" style="display:inline;">在上，</p>
+                        <p style="display:inline; background-color: green; color:white;">绿色</p>
+                        <p class="q-ma-md" style="display:inline;">在下，直接可以看到同一行不同版本之间的区别，非常方便</p>
+                        <p class="q-ma-md"></p>
+                        <q-separator></q-separator>
+                        <div id="development_environment" class="title1 q-ma-md text-primary">开发环境</div>
+                        <div class="text-h5 q-ma-md text-red-10">此软件要求Node版本大于等于22。</div>
+                        <div class="text-h5 q-ma-md text-red-10">准备开发环境，代码如下：</div>
+                        <p class="q-ma-md">$ npm i</p>
+                        <div class="text-h5 q-ma-md text-red-10">调试代码如下：</div>
+                        <p class="q-ma-md">$ npm start</p>
+                        <div class="text-h5 q-ma-md text-red-10">打包代码如下：</div>
+                        <p class="q-ma-md">$ npm run build</p>
+                        <div class="text-h5 q-ma-md text-red-10">打包前要关闭占用8080端口的所有程序，否则将打包失败。</div>
+                        <q-separator></q-separator>
+                        <div id="dependencies" class="title1 q-ma-md text-primary">依赖库</div>
+                        <p class="q-ma-md">electron</p>
+                        <p class="q-ma-md">electron-builder</p>
+                        <p class="q-ma-md">diff</p>
+                        <p class="q-ma-md">winston</p>
+                        <q-separator></q-separator>
+                        <div id="references" class="title1 q-ma-md text-primary">引用compare-folders</div>
+                        <div class="text-h5 q-ma-md text-red-10">如果你在学术研究中涉及compare-folders，那么可以按需引用以下内容。</div>
+                        <div class="text-h5 q-ma-md text-red-10">compare-folders源码(BibTeX)</div>
+                        <p class="q-ma-md">@misc{CNOCTAVE2025,
+                            author = {Yu Hongbo, },
+                            title = {compare-folders},
+                            year = {2025},
+                            howpublished = {\url{https://github.com/CNOCTAVE/compare-folders}},
+                            }</p>
+                        <div class="text-h5 q-ma-md text-red-10">compare-folders文档(BibTeX)</div>
+                        <p class="q-ma-md">@techreport{CNOCTAVE2025,
+                            author = {Yu Hongbo, },
+                            title = {compare-folders Document},
+                            institution = {BA DU XIN SHANG},
+                            year = {2025},
+                            number = {7},
+                            month = {2},
+                            url = {https://cnoctave.github.io/compare-folders/index.html},
+                            urldate = {2025-02-07},
+                            }</p>
+                    </div>
+                </div>
+                <q-toolbar class="bg-grey-8 text-white q-my-md shadow-2">
+                    <q-btn-dropdown stretch flat label="版权所有 ©">
+                        <q-list>
+                            <q-item clickable v-close-popup @click="goTo('http://cnoctave.cn')">
+                                <q-item-section>
+                                    <q-item-label>© 2024-2025 CNOCTAVE</q-item-label>
+                                </q-item-section>
+                            </q-item>
+                            <q-item clickable v-close-popup @click="goTo('https://orcid.org/0009-0007-9436-4161')">
+                                <q-item-section>
+                                    <q-item-label>© 2024-2025 Yu Hongbo</q-item-label>
+                                </q-item-section>
+                            </q-item>
+                        </q-list>
+                    </q-btn-dropdown>
+                    <q-separator dark vertical></q-separator>
+                    <q-btn stretch flat
+                        label="此文档受Creative Commons Attribution-NoDerivatives 4.0 International License协议保护。"
+                        @click="goTo('https://creativecommons.org/licenses/by-nd/4.0/')"></q-btn>
+                    <q-separator dark vertical></q-separator>
+                    <q-btn stretch flat label="下载此文档的源码"
+                        @click="goTo('https://github.com/CNOCTAVE/compare-folders')"></q-btn>
+                </q-toolbar>
+            </q-page-container>
+
+        </q-layout>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/quasar@2.17.0/dist/quasar.umd.prod.js"></script>
+    <script>
+
+        const App = {
+            data() {
+                return {
+                    scrollToTop() {
+                        window.scrollTo(0, 0);
+                    },
+                    goTo(target) {
+                        window.open(target, '_blank');
+                    },
+                    goToID(target) {
+                        window.open(target, '_self');
+                    },
+                    leftDrawerOpen: true,
+                };
+            },
+        };
+        const app = Vue.createApp(App);
+
+        app.use(Quasar)
+        app.mount('#q-app')
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+{
+    "appId": "cn.cnoctave.compare-folders",
+    "productName": "compare-folders",
+    "buildNumber": "0.1.0",
+    "icon": "logo.png",
+    "directories": {
+        "output": "dist"
+    },
+    "publish": [
+        {
+        "provider": "github",
+        "owner": "CNOCTAVE",
+        "repo": "compare-folders",
+        "releaseType": "release"
+        }
+    ],
+    "win": {
+        "artifactName": "${name}-${version}-${os}-${arch}-appx.${ext}",
+        "target": [
+            {
+                "target": "appx",
+                "arch": [
+                    "arm64"
+                ]
+            }
+        ]
+    },
+    "appx": {
+        "applicationId": "compare.folders",
+        "identityName": "compare.folders",
+        "displayName": "Compare Folders",
+        "languages": ["zh-cn"],
+        "backgroundColor": "transparent",
+        "publisherDisplayName": "***********"
+    }
+}

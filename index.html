@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+
+<!-- compare-folders is an open source markdown reader packed by electron
+Copyright (C) 2024-2025  Yu Hongbo, CNOCTAVE
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>. -->
+
+<html>
+
+<head>
+    <title>Compare Folders</title>
+    <link href="github-markdown.css" rel="stylesheet" type="text/css">
+    <link href="MaterialIcons.css" rel="stylesheet" type="text/css">
+    <link href="fontawesome/fontawesome5.css" rel="stylesheet" type="text/css">
+    <link href="fontawesome/fontawesome6.css" rel="stylesheet" type="text/css">
+    <link href="animate.css" rel="stylesheet" type="text/css">
+    <link href="quasar.css" rel="stylesheet" type="text/css">
+    <link href="main.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <div id="q-app">
+        <q-layout view="hHh LpR fFf" style="height: 98vh; min-height: unset;">
+            <q-header elevated class="bg-primary text-white">
+                <q-toolbar class="bg-primary text-white q-ny-md shadow-2">
+                    <q-btn stretch flat icon="folder" label="打开文件夹1" id="openFolder11" @click="openFolder1"></q-btn>
+                    <q-separator dark vertical></q-separator>
+                    <q-btn stretch flat icon="folder" label="打开文件夹2" id="openFolder21" @click="openFolder2"></q-btn>
+                    <q-separator dark vertical></q-separator>
+                    <p style="display: none;" id="currentFolder1"></p>
+                    <p style="display: none;" id="currentFolder2"></p>
+                    <p style="display: none;" id="folderFiles1"></p>
+                    <p style="display: none;" id="folderFiles2"></p>
+                    <p style="display: none;" id="onlyInFolder1"></p>
+                    <p style="display: none;" id="onlyInFolder2"></p>
+                    <p style="display: none;" id="commonFiles"></p>
+                    <q-space></q-space>
+                    <q-separator dark vertical></q-separator>
+                    <q-btn stretch flat icon="minimize" label="最小化" id="minimize" @click="minimize"></q-btn>
+                    <q-separator dark vertical></q-separator>
+                    <q-btn stretch flat icon="fa-regular fa-window-maximize" label="最大化/还原" id="maximize"
+                        @click="maximize"></q-btn>
+                    <q-separator dark vertical></q-separator>
+                    <q-btn stretch flat icon="close" label="关闭" id="close" @click="close"></q-btn>
+                </q-toolbar>
+            </q-header>
+            <q-page-container>
+                <div class="row parts-of-screen">
+                    <div class="col-2 parts-of-screen">
+                        <div class="half-of-part">
+                            <div class="file-title cursor-pointer" id="openFolder12"
+                                @click="openFolder1">打开文件夹1</div>
+                            <div id="fileFolderList1">
+                                <div class="empty-folder">
+                                    <q-icon name="close" size="50px"></q-icon>
+                                    <div style="display: block; width:100%; text-align: center;">无内容</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="half-of-part">
+                            <div class="file-title cursor-pointer" id="openFolder22"
+                                @click="openFolder2">打开文件夹2</div>
+                            <div id="fileFolderList2">
+                                <div class="empty-folder">
+                                    <q-icon name="close" size="50px"></q-icon>
+                                    <div style="display: block; width:100%; text-align: center;">无内容</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-5 parts-of-screen">
+                        <div class="file-title" id="fileTitle1"></div>
+                        <div id="filePart1">
+                            <div class="empty-file">
+                                <q-icon name="close" size="50px"></q-icon>
+                                <div style="display: block; width:100%; text-align: center;">无内容</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-5 parts-of-screen">
+                        <div class="file-title" id="fileTitle2"></div>
+                        <div id="filePart2">
+                            <div class="empty-file">
+                                <q-icon name="close" size="50px"></q-icon>
+                                <div style="display: block; width:100%; text-align: center;">无内容</div>
+                            </div>
+                        </div>
+                    </div>
+            </q-page-container>
+        </q-layout>
+    </div>
+    <script src="renderer.js"></script>
+    <script src="vue.js"></script>
+    <script src="quasar.js"></script>
+    <script>
+        // import { ipcRenderer } from 'electron';
+        const App = {
+            data() {
+                return {
+                    isMaximized: false,
+                    maximizeText: "最大化",
+                    openFolder1() {
+                        if (window.require && window.require('electron').ipcRenderer) {
+                            window.require('electron').ipcRenderer.send('open-folder-1');
+                        } else {
+                            console.log('Electron not ready');
+                        }
+                    },
+                    openFolder2() {
+                        if (window.require && window.require('electron').ipcRenderer) {
+                            window.require('electron').ipcRenderer.send('open-folder-2');
+                        } else {
+                            console.log('Electron not ready');
+                        }
+                    },
+                    minimize() {
+                        this.sendActionToMain('minimize');
+                    },
+                    maximize() {
+                        if (this.isMaximized) {
+                            this.maximizeText = "还原";
+                        }
+                        else {
+                            this.maximizeText = "最大化";
+                        }
+                        this.isMaximized = !this.isMaximized;
+                        this.sendActionToMain('maximize');
+                    },
+                    close() {
+                        this.sendActionToMain('close');
+                    },
+                    sendActionToMain(action) {
+                        if (window.require && window.require('electron').ipcRenderer) {
+                            const id = Date.now()
+                            window.require('electron').ipcRenderer.send('message-from-renderer');
+                            window.require('electron').ipcRenderer.on('message-from-main', (event, arg) => {
+                                event.sender.removeListener('message-from-main', arguments[1])
+                            })
+                        } else {
+                            console.log('Electron not ready');
+                        }
+                    }
+                };
+            },
+        };
+        const app = Vue.createApp(App);
+
+        app.use(Quasar)
+        app.mount('#q-app')
+    </script>
+</body>
+
+</html>
