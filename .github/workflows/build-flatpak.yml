@@ -16,7 +16,7 @@ jobs:
       options: --privileged
     steps:
     - uses: actions/checkout@v4
-    - uses: CNOCTAVE/pack-flatpak-and-upload-to-github-release-tag@v1
+    - uses: CNOCTAVE/pack-flatpak-and-upload-to-github-release-tag/pack-flatpak-and-upload-to-github-release-tag@v1
       with:
         bundle: cn.cnoctave.marked-reader
         manifest-path: cn.cnoctave.marked-reader.yml
