@@ -23,8 +23,10 @@ jobs:
     - run: git clone https://github.com/CNOCTAVE/pack-flatpak-and-upload-to-github-release-tag pack-flatpak-and-upload-to-github-release-tag
     - run: sleep 10
     - run: cd ./pack-flatpak-and-upload-to-github-release-tag/pack-flatpak-and-upload-to-github-release-tag
+    - run: sleep 5
     - run: npm ci && npm i
     - run: cd ../..
+    - run: sleep 5
     - uses: ./pack-flatpak-and-upload-to-github-release-tag/pack-flatpak-and-upload-to-github-release-tag
       with:
         bundle: cn.cnoctave.marked-reader
