@@ -23,7 +23,7 @@ jobs:
     - run: git clone https://github.com/CNOCTAVE/pack-flatpak-and-upload-to-github-release-tag pack-flatpak-and-upload-to-github-release-tag
     - run: sleep 10
     - run: cd ./pack-flatpak-and-upload-to-github-release-tag/pack-flatpak-and-upload-to-github-release-tag
-    - run: npm ci
+    - run: npm ci && npm i
     - run: cd ../..
     - uses: ./pack-flatpak-and-upload-to-github-release-tag/pack-flatpak-and-upload-to-github-release-tag
       with:
