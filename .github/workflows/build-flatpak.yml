@@ -20,11 +20,11 @@ jobs:
       with:
         node-version: 20
         registry-url: https://registry.npmjs.org/
-    - run: git clone https://github.com/CNOCTAVE/pack-flatpak-and-upload-to-github-release-tag .
-    - run: cd ./pack-flatpak-and-upload-to-github-release-tag
+    - run: git clone https://github.com/CNOCTAVE/pack-flatpak-and-upload-to-github-release-tag pack-flatpak-and-upload-to-github-release-tag
+    - run: cd ./pack-flatpak-and-upload-to-github-release-tag./pack-flatpak-and-upload-to-github-release-tag
     - run: npm ci
-    - run: cd ..
-    - uses: ./pack-flatpak-and-upload-to-github-release-tag
+    - run: cd ../..
+    - uses: ./pack-flatpak-and-upload-to-github-release-tag./pack-flatpak-and-upload-to-github-release-tag
       with:
         bundle: cn.cnoctave.marked-reader
         manifest-path: cn.cnoctave.marked-reader.yml
