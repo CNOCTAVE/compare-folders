@@ -1,0 +1,26 @@
+# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
+# For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
+
+name: Build Flatpak
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  flatpak:
+    name: "Flatpak"
+    runs-on: ubuntu-latest
+    container:
+      image: bilelmoussaoui/flatpak-github-actions:gnome-47
+      options: --privileged
+    steps:
+    - uses: actions/checkout@v4
+    - uses: CNOCTAVE/pack-flatpak-and-upload-to-github-release-tag@v1
+      with:
+        bundle: cn.cnoctave.marked-reader
+        manifest-path: cn.cnoctave.marked-reader.yml
+        cache-key: pack-flatpak-and-upload-to-github-release-tag-${{ github.sha }}
+        upload-artifact: false
+        verbose: true
+        github-tag: ${{ github.event.inputs.TAG_NAME || github.event.release.tag_name }}
