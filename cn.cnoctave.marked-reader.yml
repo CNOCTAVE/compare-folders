@@ -22,13 +22,13 @@ modules:
     buildsystem: simple
     build-options:
       env:
-        XDG_CACHE_HOME: /run/build/compare-folders/flatpak-node/cache
-        npm_config_cache: /run/build/compare-folders/flatpak-node/npm-cache
+        XDG_CACHE_HOME: ./flatpak-node/cache
+        npm_config_cache: ./flatpak-node/npm-cache
         npm_config_offline: 'false'
     build-commands:
       # Install npm dependencies
       - npm install
-      - mkdir -p /run/build/compare-folders/main
+      - mkdir -p ./main
       # Build the app; in this example the `dist` script
       # in package.json runs electron-builder
       - |

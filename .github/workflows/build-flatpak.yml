@@ -28,6 +28,7 @@ jobs:
     - run: cd ../..
     - run: sleep 5
     - run: npm i @actions/artifact @actions/cache @actions/core @actions/exec @actions/github js-yaml
+    - run: pwd
     - run: sleep 10
     - uses: ./pack-flatpak-and-upload-to-github-release-tag/pack-flatpak-and-upload-to-github-release-tag
       with:
