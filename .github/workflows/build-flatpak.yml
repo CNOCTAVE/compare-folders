@@ -8,34 +8,55 @@ on:
     types: [created]
 
 jobs:
-  flatpak:
-    name: "Flatpak"
+  # flatpak:
+  #   name: "Flatpak"
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: bilelmoussaoui/flatpak-github-actions:gnome-47
+  #     options: --privileged
+  #   steps:
+  #   - uses: actions/checkout@v4
+  #   - uses: actions/setup-node@v4
+  #     with:
+  #       node-version: 20
+  #       registry-url: https://registry.npmjs.org/
+  #   - run: git clone https://github.com/CNOCTAVE/pack-flatpak-and-upload-to-github-release-tag pack-flatpak-and-upload-to-github-release-tag
+  #   - run: sleep 10
+  #   - run: cd ./pack-flatpak-and-upload-to-github-release-tag/pack-flatpak-and-upload-to-github-release-tag
+  #   - run: sleep 5
+  #   - run: npm ci
+  #   - run: cd ../..
+  #   - run: sleep 5
+  #   - run: npm i
+  #   - run: npm i @actions/artifact @actions/cache @actions/core @actions/exec @actions/github js-yaml
+  #   - run: sleep 10
+  #   - uses: ./pack-flatpak-and-upload-to-github-release-tag/pack-flatpak-and-upload-to-github-release-tag
+  #     with:
+  #       bundle: cn.cnoctave.marked-reader
+  #       manifest-path: cn.cnoctave.marked-reader.yml
+  #       cache-key: pack-flatpak-and-upload-to-github-release-tag-${{ github.sha }}
+  #       upload-artifact: false
+  #       verbose: true
+  #       github-tag: ${{ github.event.inputs.TAG_NAME || github.event.release.tag_name }}
+
+  linux_flatpak-build:
     runs-on: ubuntu-latest
     container:
       image: bilelmoussaoui/flatpak-github-actions:gnome-47
       options: --privileged
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 20
-        registry-url: https://registry.npmjs.org/
-    - run: git clone https://github.com/CNOCTAVE/pack-flatpak-and-upload-to-github-release-tag pack-flatpak-and-upload-to-github-release-tag
-    - run: sleep 10
-    - run: cd ./pack-flatpak-and-upload-to-github-release-tag/pack-flatpak-and-upload-to-github-release-tag
-    - run: sleep 5
-    - run: npm ci
-    - run: cd ../..
-    - run: sleep 5
-    - run: npm i @actions/artifact @actions/cache @actions/core @actions/exec @actions/github js-yaml
-    - run: pwd
-    - run: flatpak-builder build org.flathub.electron-sample-app.yml --install-deps-from=flathub --force-clean --user --install
-    - run: sleep 10
-    - uses: ./pack-flatpak-and-upload-to-github-release-tag/pack-flatpak-and-upload-to-github-release-tag
-      with:
-        bundle: cn.cnoctave.marked-reader
-        manifest-path: cn.cnoctave.marked-reader.yml
-        cache-key: pack-flatpak-and-upload-to-github-release-tag-${{ github.sha }}
-        upload-artifact: false
-        verbose: true
-        github-tag: ${{ github.event.inputs.TAG_NAME || github.event.release.tag_name }}
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org/
+      - uses: bduff9/use-npmrc@v2.0.0
+        with:
+          dot-npmrc: ${{ secrets.DOT_NPMRC }}
+      - uses: samuelmeuli/action-snapcraft@v2
+      - run: sudo dpkg --add-architecture i386 && sudo apt-get update -y && sudo apt-get install lzip elfutils libarchive-tools wine wine32 -y
+      - run: flatpak install flathub org.freedesktop.Platform/x86_64/24.08 -y
+      - run: flatpak install flathub org.electronjs.Electron2.BaseApp/x86_64/24.08 -y
+      - run: flatpak install flatpak install flathub org.freedesktop.Sdk.Extension.node22/x86_64/24.08 -y
+      - run: npm ci
+      - run: npm run build-linux_flatpak
