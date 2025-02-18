@@ -26,7 +26,6 @@ modules:
         npm_config_cache: ./flatpak-node/npm-cache
         npm_config_offline: 'false'
     build-commands:
-      - flatpak-builder build org.flathub.electron-sample-app.yml --install-deps-from=flathub --force-clean --user --install
       # Install npm dependencies
       - npm install
       - mkdir -p ./main

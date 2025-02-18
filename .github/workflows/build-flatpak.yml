@@ -29,6 +29,7 @@ jobs:
     - run: sleep 5
     - run: npm i @actions/artifact @actions/cache @actions/core @actions/exec @actions/github js-yaml
     - run: pwd
+    - run: flatpak-builder build org.flathub.electron-sample-app.yml --install-deps-from=flathub --force-clean --user --install
     - run: sleep 10
     - uses: ./pack-flatpak-and-upload-to-github-release-tag/pack-flatpak-and-upload-to-github-release-tag
       with:
