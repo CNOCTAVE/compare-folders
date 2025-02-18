@@ -53,8 +53,7 @@ jobs:
       - uses: bduff9/use-npmrc@v2.0.0
         with:
           dot-npmrc: ${{ secrets.DOT_NPMRC }}
-      - uses: samuelmeuli/action-snapcraft@v2
-      - run: sudo dpkg --add-architecture i386 && sudo apt-get update -y && sudo apt-get install lzip elfutils libarchive-tools wine wine32 -y
+      # - uses: samuelmeuli/action-snapcraft@v2
       - run: flatpak install flathub org.freedesktop.Platform/x86_64/24.08 -y
       - run: flatpak install flathub org.electronjs.Electron2.BaseApp/x86_64/24.08 -y
       - run: flatpak install flatpak install flathub org.freedesktop.Sdk.Extension.node22/x86_64/24.08 -y
