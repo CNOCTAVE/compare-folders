@@ -41,6 +41,8 @@ jobs:
 
   linux_flatpak-build:
     runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
     container:
       image: bilelmoussaoui/flatpak-github-actions:gnome-47
       options: --privileged
