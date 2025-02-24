@@ -1,7 +1,7 @@
 {
     "appId": "cn.cnoctave.compare-folders",
     "productName": "compare-folders",
-    "buildNumber": "0.1.0",
+    "buildNumber": "1.0.0",
     "icon": "logo.png",
     "directories": {
         "output": "dist"
