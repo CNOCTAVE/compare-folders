@@ -29,7 +29,7 @@ module.exports = {
     config: {
         "appId": "cn.cnoctave.compare-folders",
         "productName": "compare-folders",
-        "buildNumber": "1.0.0",
+        "buildNumber": "2.0.0",
         directories: {
             output: 'dist',
         },
